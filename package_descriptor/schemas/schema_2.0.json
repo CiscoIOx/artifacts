@@ -226,14 +226,7 @@
       "type": "object", 
       "properties": {
         "kernel-version": {
-          "oneOf": [
-            {
-              "type": "string"
-            }, 
-            {
-              "type": "number"
-            }
-          ]
+          "type": "string"
         }, 
         "startup": {
           "$ref": "#/definitions/__main__.StartupLXC"

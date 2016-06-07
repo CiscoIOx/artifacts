@@ -1,0 +1,686 @@
+{
+  "description": "Schema for IOx application descriptor - version 2.1", 
+  "additionalProperties": false, 
+  "definitions": {
+    "__main__.StartupNotGenericLinux": {
+      "additionalProperties": false, 
+      "required": [
+        "runtime", 
+        "target", 
+        "runtime-version"
+      ], 
+      "type": "object", 
+      "properties": {
+        "runtime-version": {
+          "oneOf": [
+            {
+              "type": "number"
+            }, 
+            {
+              "type": "string"
+            }
+          ]
+        }, 
+        "runtime-options": {
+          "$ref": "#/definitions/__main__.RuntimeOptions"
+        }, 
+        "runtime": {
+          "pattern": "^((?!generic-linux).)*$", 
+          "type": "string"
+        }, 
+        "target": {
+          "pattern": "^[a-zA-Z]([^/]+(/)?)+$", 
+          "type": "string"
+        }
+      }
+    }, 
+    "__main__.Devices": {
+      "additionalProperties": false, 
+      "required": [
+        "type", 
+        "label"
+      ], 
+      "type": "object", 
+      "properties": {
+        "usage": {
+          "type": "string"
+        }, 
+        "device-id": {
+          "type": "string"
+        }, 
+        "type": {
+          "type": "string"
+        }, 
+        "label": {
+          "type": "string"
+        }
+      }
+    }, 
+    "__main__.AppLXC_2_1": {
+      "additionalProperties": false, 
+      "required": [
+        "cpuarch", 
+        "type", 
+        "kernel-version", 
+        "startup"
+      ], 
+      "type": "object", 
+      "properties": {
+        "kernel-version": {
+          "type": "string"
+        }, 
+        "startup": {
+          "$ref": "#/definitions/__main__.StartupLXC"
+        }, 
+        "depends-on": {
+          "oneOf": [
+            {
+              "required": [
+                "services"
+              ], 
+              "type": "object", 
+              "properties": {
+                "services": {
+                  "items": {
+                    "$ref": "#/definitions/__main__.ServiceDependsOn_21"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }
+          ]
+        }, 
+        "cpuarch": {
+          "type": "string"
+        }, 
+        "env": {
+          "additionalProperties": true, 
+          "type": "object", 
+          "properties": {}
+        }, 
+        "type": {
+          "enum": [
+            "lxc"
+          ], 
+          "type": "string"
+        }, 
+        "resources": {
+          "$ref": "#/definitions/__main__.Resources_21"
+        }
+      }
+    }, 
+    "__main__.AppVM_2_1": {
+      "additionalProperties": false, 
+      "required": [
+        "cpuarch", 
+        "type", 
+        "startup"
+      ], 
+      "type": "object", 
+      "properties": {
+        "startup": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/__main__.StartupVM_2_1_RFS"
+            }, 
+            {
+              "$ref": "#/definitions/__main__.StartupVM_2_1_DISKS"
+            }
+          ]
+        }, 
+        "depends-on": {
+          "oneOf": [
+            {
+              "required": [
+                "services"
+              ], 
+              "type": "object", 
+              "properties": {
+                "services": {
+                  "items": {
+                    "$ref": "#/definitions/__main__.ServiceDependsOn_21"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }
+          ]
+        }, 
+        "cpuarch": {
+          "type": "string"
+        }, 
+        "env": {
+          "additionalProperties": true, 
+          "type": "object", 
+          "properties": {}
+        }, 
+        "type": {
+          "enum": [
+            "vm"
+          ], 
+          "type": "string"
+        }, 
+        "resources": {
+          "$ref": "#/definitions/__main__.Resources_21"
+        }
+      }
+    }, 
+    "__main__.RuntimeOptions": {
+      "additionalProperties": true, 
+      "required": [
+        "classpath"
+      ], 
+      "type": "object", 
+      "properties": {
+        "classpath": {
+          "type": "string"
+        }
+      }
+    }, 
+    "__main__.Network_21": {
+      "additionalProperties": false, 
+      "required": [
+        "interface-name"
+      ], 
+      "type": "object", 
+      "properties": {
+        "interface-name": {
+          "type": "string"
+        }, 
+        "ports": {
+          "anyOf": [
+            {
+              "required": [
+                "tcp"
+              ], 
+              "type": "object", 
+              "properties": {
+                "tcp": {
+                  "items": [
+                    {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        }, 
+                        {
+                          "type": "integer"
+                        }
+                      ]
+                    }
+                  ], 
+                  "type": "array"
+                }
+              }
+            }, 
+            {
+              "required": [
+                "udp"
+              ], 
+              "type": "object", 
+              "properties": {
+                "udp": {
+                  "items": [
+                    {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        }, 
+                        {
+                          "type": "integer"
+                        }
+                      ]
+                    }
+                  ], 
+                  "type": "array"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }, 
+    "__main__.Stop": {
+      "additionalProperties": false, 
+      "required": [
+        "target"
+      ], 
+      "type": "object", 
+      "properties": {
+        "target": {
+          "pattern": "^[a-zA-Z]([^/]+(/)?)+$", 
+          "type": "string"
+        }
+      }
+    }, 
+    "__main__.AppInfo": {
+      "additionalProperties": false, 
+      "required": [
+        "name", 
+        "version"
+      ], 
+      "type": "object", 
+      "properties": {
+        "author-name": {
+          "type": "string"
+        }, 
+        "version": {
+          "type": "string"
+        }, 
+        "author-link": {
+          "type": "string"
+        }, 
+        "name": {
+          "type": "string"
+        }, 
+        "description": {
+          "type": "string"
+        }
+      }
+    }, 
+    "__main__.ServiceDependsOn_21": {
+      "additionalProperties": false, 
+      "required": [
+        "id", 
+        "label"
+      ], 
+      "type": "object", 
+      "properties": {
+        "label": {
+          "type": "string"
+        }, 
+        "required": {
+          "type": "boolean"
+        }, 
+        "max-api-version": {
+          "type": "number"
+        }, 
+        "id": {
+          "type": "string"
+        }, 
+        "min-api-version": {
+          "type": "number"
+        }
+      }
+    }, 
+    "__main__.CartridgeDependsOn": {
+      "additionalProperties": false, 
+      "required": [
+        "id", 
+        "version"
+      ], 
+      "type": "object", 
+      "properties": {
+        "version": {
+          "type": "number"
+        }, 
+        "id": {
+          "type": "string"
+        }
+      }
+    }, 
+    "__main__.AppPaas_2_1": {
+      "additionalProperties": false, 
+      "required": [
+        "type", 
+        "startup"
+      ], 
+      "type": "object", 
+      "properties": {
+        "stop": {
+          "$ref": "#/definitions/__main__.Stop"
+        }, 
+        "startup": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/__main__.StartupGenericLinux"
+            }, 
+            {
+              "$ref": "#/definitions/__main__.StartupNotGenericLinux"
+            }
+          ]
+        }, 
+        "depends-on": {
+          "anyOf": [
+            {
+              "required": [
+                "cartridges"
+              ], 
+              "type": "object", 
+              "properties": {
+                "cartridges": {
+                  "items": {
+                    "$ref": "#/definitions/__main__.CartridgeDependsOn"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }, 
+            {
+              "required": [
+                "services"
+              ], 
+              "type": "object", 
+              "properties": {
+                "services": {
+                  "items": {
+                    "$ref": "#/definitions/__main__.ServiceDependsOn_21"
+                  }, 
+                  "type": "array"
+                }
+              }
+            }
+          ]
+        }, 
+        "cpuarch": {
+          "type": "string"
+        }, 
+        "env": {
+          "additionalProperties": true, 
+          "type": "object", 
+          "properties": {}
+        }, 
+        "type": {
+          "enum": [
+            "paas"
+          ], 
+          "type": "string"
+        }, 
+        "resources": {
+          "$ref": "#/definitions/__main__.Resources_21"
+        }
+      }
+    }, 
+    "__main__.Service_21": {
+      "additionalProperties": false, 
+      "required": [
+        "id", 
+        "api-version", 
+        "version"
+      ], 
+      "type": "object", 
+      "properties": {
+        "api-version": {
+          "type": "number"
+        }, 
+        "port-mapping": {
+          "items": {
+            "pattern": "^[\\w]+:(tcp|udp){1}:[0-9-]+$", 
+            "type": "string"
+          }, 
+          "type": "array"
+        }, 
+        "version": {
+          "type": "string"
+        }, 
+        "id": {
+          "type": "string"
+        }, 
+        "description": {
+          "type": "string"
+        }
+      }
+    }, 
+    "__main__.StartupGenericLinux": {
+      "additionalProperties": false, 
+      "required": [
+        "runtime", 
+        "target"
+      ], 
+      "type": "object", 
+      "properties": {
+        "runtime": {
+          "enum": [
+            "generic-linux"
+          ], 
+          "type": "string"
+        }, 
+        "target": {
+          "pattern": "^[a-zA-Z]([^/]+(/)?)+$", 
+          "type": "string"
+        }
+      }
+    }, 
+    "__main__.Graphics": {
+      "additionalProperties": false, 
+      "type": "object", 
+      "properties": {
+        "vnc": {
+          "type": "boolean"
+        }
+      }
+    }, 
+    "__main__.ResourcesRecommendations": {
+      "additionalProperties": false, 
+      "required": [
+        "profile", 
+        "label", 
+        "description"
+      ], 
+      "type": "object", 
+      "properties": {
+        "profile": {
+          "type": "string"
+        }, 
+        "description": {
+          "type": "string"
+        }, 
+        "label": {
+          "type": "string"
+        }
+      }
+    }, 
+    "__main__.StartupVM_2_1_DISKS": {
+      "additionalProperties": false, 
+      "required": [
+        "disks"
+      ], 
+      "type": "object", 
+      "properties": {
+        "ostype": {
+          "type": "string"
+        }, 
+        "disks": {
+          "items": {
+            "type": "object", 
+            "properties": {
+              "target-dev": {
+                "type": "string"
+              }, 
+              "file": {
+                "type": "string"
+              }
+            }
+          }, 
+          "type": "array"
+        }, 
+        "qemu-guest-agent": {
+          "type": "boolean"
+        }
+      }
+    }, 
+    "__main__.StartupVM_2_1_RFS": {
+      "additionalProperties": false, 
+      "required": [
+        "rootfs", 
+        "kernel"
+      ], 
+      "type": "object", 
+      "properties": {
+        "ostype": {
+          "type": "string"
+        }, 
+        "kernel": {
+          "type": "string"
+        }, 
+        "qemu-guest-agent": {
+          "type": "boolean"
+        }, 
+        "rootfs": {
+          "type": "string"
+        }
+      }
+    }, 
+    "__main__.ServicesProvides_21": {
+      "additionalProperties": false, 
+      "required": [
+        "provides"
+      ], 
+      "type": "object", 
+      "properties": {
+        "provides": {
+          "items": {
+            "$ref": "#/definitions/__main__.Service_21"
+          }, 
+          "type": "array"
+        }
+      }
+    }, 
+    "__main__.Resources_21": {
+      "additionalProperties": false, 
+      "required": [
+        "profile"
+      ], 
+      "type": "object", 
+      "properties": {
+        "profile": {
+          "type": "string"
+        }, 
+        "graphics": {
+          "$ref": "#/definitions/__main__.Graphics"
+        }, 
+        "network": {
+          "items": {
+            "$ref": "#/definitions/__main__.Network_21"
+          }, 
+          "type": "array"
+        }, 
+        "memory": {
+          "oneOf": [
+            {
+              "type": "string"
+            }, 
+            {
+              "type": "integer"
+            }
+          ]
+        }, 
+        "device-info": {
+          "items": {
+            "enum": [
+              "udi"
+            ], 
+            "type": "string"
+          }, 
+          "type": "array"
+        }, 
+        "broker": {
+          "items": {
+            "enum": [
+              "BrokerClient", 
+              "Broker"
+            ], 
+            "type": "string"
+          }, 
+          "type": "array"
+        }, 
+        "devices": {
+          "items": {
+            "$ref": "#/definitions/__main__.Devices"
+          }, 
+          "type": "array"
+        }, 
+        "recommendations": {
+          "items": {
+            "$ref": "#/definitions/__main__.ResourcesRecommendations"
+          }, 
+          "type": "array"
+        }, 
+        "oauth": {
+          "items": {
+            "enum": [
+              "OauthClient", 
+              "OauthValidator"
+            ], 
+            "type": "string"
+          }, 
+          "type": "array"
+        }, 
+        "disk": {
+          "oneOf": [
+            {
+              "type": "string"
+            }, 
+            {
+              "type": "integer"
+            }
+          ]
+        }, 
+        "cpu": {
+          "oneOf": [
+            {
+              "type": "string"
+            }, 
+            {
+              "type": "integer"
+            }
+          ]
+        }
+      }
+    }, 
+    "__main__.StartupLXC": {
+      "additionalProperties": false, 
+      "required": [
+        "rootfs", 
+        "target"
+      ], 
+      "type": "object", 
+      "properties": {
+        "target": {
+          "pattern": "^[/a-zA-Z]([^/]+(/)?)+$", 
+          "type": "string"
+        }, 
+        "rootfs": {
+          "type": "string"
+        }
+      }
+    }
+  }, 
+  "$schema": "http://json-schema.org/draft-04/schema#", 
+  "required": [
+    "descriptor-schema-version", 
+    "info", 
+    "app"
+  ], 
+  "type": "object", 
+  "properties": {
+    "info": {
+      "$ref": "#/definitions/__main__.AppInfo"
+    }, 
+    "service-bundle": {
+      "$ref": "#/definitions/__main__.ServicesProvides_21"
+    }, 
+    "app": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/__main__.AppPaas_2_1"
+        }, 
+        {
+          "$ref": "#/definitions/__main__.AppLXC_2_1"
+        }, 
+        {
+          "$ref": "#/definitions/__main__.AppVM_2_1"
+        }
+      ]
+    }, 
+    "descriptor-schema-version": {
+      "oneOf": [
+        {
+          "type": "string"
+        }, 
+        {
+          "type": "number"
+        }
+      ]
+    }
+  }
+}
