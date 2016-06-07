@@ -1,0 +1,49 @@
+descriptor-schema-version: "2.0"  # Descriptor schema version you wanted to use
+info: # Basic app information
+  author-link: "http://www.cisco.com/"
+  author-name: "Cisco Systems"
+  description: "Periodically collects sensor data and writes it into sensor.data file"
+  name: "Sensorbot-Custom Scripts"
+  version: "7.5"
+
+app: #Tells the metadata about the app, like resources needed.
+  # Type of the app
+  type: vm
+  #CPU architecture of your app
+  cpuarch: "x86_64"
+  #Kernel version needed by the app
+  kernel-version: "3.8"
+  resources:
+    # Resource Profile(includes CPU, Memory and Disk) needed by your app.
+    profile: c1.large
+    # Eanbles the app to talk with serial devices connected to the device.
+    devices:
+      -
+        device-id: serial # ID of the device
+        label: HOST_DEV1 # Label of your choice
+        type: serial # Device type
+        usage: "modbus adaptor" # Description about the device
+    # Network required by app.
+    network:
+     -
+       interface-name: eth0 # Name of the network interface exposed in to app
+       ports: # Ports needed by the app
+         tcp:
+           - 9000
+           - 10000
+         udp:
+           - 1111
+    # Talks about the app capability in terms on the resources provided to it.
+    recommendations:
+      -
+        description: "My app can scale to 50 sensors with profile c1.small"
+        label: "50 Sensors"
+        profile: c1.small
+      -
+        description: "My app can scale to 500 sensors with profile c1.large"
+        label: "500 Sensors"
+        profile: c1.large
+  # Defines the starting point of your app
+  startup:
+    rootfs: rootfs.tar.gz
+    kernel: vmlinuz

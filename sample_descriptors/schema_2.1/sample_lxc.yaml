@@ -1,0 +1,43 @@
+descriptor-schema-version: "2.1" # Descriptor schema version you wanted to use
+info: # Basic app information
+  name: sbot 
+  description: "LXC Style app with python 2.7.3"
+  version: "4.1"
+  author-link: "http://www.cisco.com"
+  author-name: "Cisco Systems"
+ 
+app: #Tells the metadata about the app, like resources needed.
+  # Type of the app 
+  type: lxc 
+  #CPU architecture of your app
+  cpuarch: "x86_64"
+  #Kernel version needed by the app
+  kernel-version: "3.8"
+  resources:
+    # To get CISCO Unique Device Identification, to identify the device.
+    device-info: ["udi"]
+    # Resource Profile(includes CPU, Memory and Disk) needed by your app.
+    profile: c1.large
+    # Eanbles the app to talk with serial devices connected to the device.
+    devices:
+      -
+        device-id: serial # ID of the device
+        label: HOST_DEV1 # Label of your choice
+        type: serial # Device type
+        usage: "modbus adaptor" # Description about the device
+    # Network required by app.
+    network:
+     -
+       interface-name: eth0 # Name of the network interface exposed in to app
+       ports: # Ports needed by the app
+         tcp:
+           - 9000-9010 # Asking for range of ports
+           - 1111
+         udp:
+           - 10000-10010, 2000
+
+# Specify runtime and startup
+  startup:
+    # Copy the app.ext2 from pywebserver app to the below location
+    rootfs: file:///mnt/hgfs/macshare/app.ext2 
+    target: /sbin/init
