@@ -1,0 +1,37 @@
+descriptor-schema-version: "2.1" # Descriptor schema version you wanted to use
+info: # Basic app information
+  name: Sample VM 
+  description: "Sample VM for use case"
+  version: "0.1"
+  author-link: "http://www.cisco.com/"
+  author-name: "Cisco Systems"
+
+app: #Tells the metadata about the app, like resources needed.
+  # Type of the app
+  type: vm
+  #CPU architecture of your app
+  cpuarch: "x86_64"
+  resources:
+    # To get CISCO Unique Device Identification, to identify the device.
+    device-info: ["udi"]
+    # Resource Profile(includes CPU, Memory and Disk) needed by your app.
+    profile: custom
+    cpu: "600"
+    disk: "10"
+    memory: "3072"
+
+    # Network required by app.
+    network:
+     -
+       interface-name: eth0 # Name of the network interface exposed in to app
+       ports: # Ports needed by the app
+         tcp: ["1111", "9000-9010"]
+         udp: ["2000", "10000-10010"]
+
+  # Defines the starting point of your app
+  startup:
+    disks:
+      -
+        target-dev: "hdc"
+        file: "app.img
+    qemu-guest-agent: TRUE
