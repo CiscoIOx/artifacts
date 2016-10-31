@@ -2,7 +2,7 @@
   "description": "Schema for IOx application descriptor - version 1.0", 
   "additionalProperties": false, 
   "definitions": {
-    "__main__.AppInfo": {
+    "descriptorschema_1_0.AppInfo": {
       "additionalProperties": false, 
       "required": [
         "name", 
@@ -37,7 +37,7 @@
   "type": "object", 
   "properties": {
     "info": {
-      "$ref": "#/definitions/__main__.AppInfo"
+      "$ref": "#/definitions/descriptorschema_1_0.AppInfo"
     }, 
     "app": {
       "oneOf": [
