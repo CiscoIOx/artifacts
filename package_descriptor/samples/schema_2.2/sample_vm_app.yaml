@@ -1,0 +1,47 @@
+descriptor-schema-version: "2.2"
+info:
+  name: Windows 7 VM 
+  description: "Sample Windows 7 VM for Hokkaido use case"
+  version: "0.1"
+  author-link: "http://www.cisco.com/"
+  author-name: "Cisco Systems"
+
+app:
+  type: vm
+  cpuarch: "x86_64"
+  resources:
+    profile: custom
+    cpu: "600"
+    disk: "10"
+    # 3G memory
+    memory: "3072"
+    vcpu: "4"
+    cpu-topology:
+      sockets-per-core: "2"
+      cores: "2"
+    network:
+      -
+        interface-name: eth0
+      -
+        interface-name: eth1
+
+    graphics:
+      vnc: true
+
+
+  startup:
+    ostype: windows
+    qemu-guest-agent: false
+
+    disks:
+      - target-dev: hda
+        # file uri will be resolved relative to fileuri_basepath 
+        # in system-config.ini
+        # E.g system-config.ini
+        # [controller]
+        # fileuri_basepath:/software/caf/work/scpdest
+        # Now win7.img will be normalised to  "/software/caf/work/scpdest/win7.img” path .
+        file: file://win7.img
+
+
+
