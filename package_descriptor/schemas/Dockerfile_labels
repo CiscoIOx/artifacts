@@ -1,4 +1,4 @@
-Dockerfile LABELs (required are in bold):
+Dockerfile LABELs:
 
 cisco.info.name
 cisco.info.version
