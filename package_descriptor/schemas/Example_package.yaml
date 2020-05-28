@@ -1,0 +1,113 @@
+descriptor-schema-version: "2.12"
+info:
+  name: wcs
+  description: Cisco Wired Client Sensor
+  version: "0.1"
+  author-link: http://www.cisco.com
+  author-name: Cisco Systems, Inc.
+app:
+  cpu-core: four
+  cpuarch: x86_64
+  depends-on:
+    packages:
+    - name: deps pkg
+      version: v1.0
+  env:
+    PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    http_proxy: http://proxy-wsa.esl.cisco.com:80
+    https_proxy: https://proxy-wsa.esl.cisco.com:80
+  monitor:
+    initial_delay_seconds: 30
+    period_seconds: 60
+    script: /usr/share/health.sh
+  post_upgrade:
+    initial_wait_time: 30
+    post_script: /usr/share/post.sh
+  resources:
+    access-control:
+      type: oauth2
+    broker:
+    - BrokerClient
+    - Broker
+    container-size: 32
+    copy-from-host:
+      nested-dirname: /data/app_data/docker_data
+      parent-dirname: /data
+    cpu: 54
+    cpu-topology:
+      cores: 2
+      sockets-per-core: 2
+    datastore: true
+    device-info:
+    - udi
+    devices:
+    - device-id: serial
+      label: HOST_DEV0
+      type: serial
+      usage: Serial Adaptor 0
+    - alias: usb1
+      device-directory-to-mount: /media/usb/
+      function: storage
+      label: HOST_DEV2
+      mandatory: false
+      mount-point: /mnt/storage/
+      productID: "0xfc74"
+      type: usbdev
+      usage: External for persistent message queues
+      vendorID: "0x07ab"
+    disk: 2
+    extended-resources: false
+    graphics:
+      vnc: true
+    host_mounts:
+    - description: Used for storage and forward
+      host_mount_path: /software/caf/app_data_share
+      target_mount: /mnt/storage_fwd
+    - description: Used for tmpfs
+      host_mount_path: /var/log/app_tmpfs
+      target_mount: /tmp/var/tmpfs
+    memory: 64
+    network:
+    - description: Default Network - nat
+      hint: Ethernet Out of Band Channel
+      interface-name: eth0
+      mac_forward_disable_mask: 0000.0000.0000
+      mac_forward_enable_mask: ffff.ffff.ffff
+      mirroring: false
+      ports:
+        tcp:
+        - "8484"
+        - "8485"
+      type: eobc
+      voice-vlan: true
+    - interface-name: eth1
+      ipv6_required: false
+      ports:
+        udp:
+        - "9000"
+        - "9001"
+    oauth:
+    - OauthClient
+    - OauthValidator
+    persistent_data_target: /data/app_data
+    platform-env:
+    - /usr/local/bin
+    - /usr/sbin
+    privileged: false
+    profile: custom
+    ramfs:
+      size: 512M
+    recommendations:
+    - description: Recommended profile
+      label: PROFILE_CUSTOM
+      profile: custom
+    rootfs_expanded_size: 256
+    rootfs_size: 128
+    seed-controller-certificate: false
+    vcpu: 4
+    visualization: false
+  startup:
+    rootfs: rootfs.tar
+    runtime_options: --env MYVAR2=foo
+    target: /usr/share/dsa/start.sh
+  type: docker
