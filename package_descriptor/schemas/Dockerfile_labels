@@ -7,7 +7,6 @@ cisco.info.author-link
 cisco.info.author-name 
 
 cisco.descriptor-schema-version
-cisco.service-bundle
 cisco.cpuarch
 cisco.env
 cisco.type
@@ -15,7 +14,6 @@ cisco.depends-on.package
 cisco.cpu-core
 cisco.post_upgrade.initial_wait_time
 cisco.post_upgrade.post_script
-cisco.system-capabilities:
 
 cicco.startup.image-name
 cicco.startup.target
@@ -53,7 +51,6 @@ cisco.resources.network.<number>.ports.udp
 cisco.resources.network.<number>.voice-lan
 cisco.resources.network.<number>.description
 
-cisco.resources.vcpu
 cisco.resources.rootfs_expanded_size
 cisco.resources.access-control
 cisco.resources.provided
@@ -70,7 +67,6 @@ cisco.resources.filesystem.source.name
 cisco.resources.filesystem.source.file
 cisco.resources.device-info
 cisco.resources.broker
-cisco.resources.graphics.vnc
 cisco.resources.oauth
 cisco.resources.container-size
 cisco.resources.cpu-topology.cores
