@@ -1,0 +1,1553 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "descriptorschema_2_16.AppInfo": {
+      "type": "object",
+      "properties": {
+        "author-link": {
+          "type": "string"
+        },
+        "author-name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.HostMounts": {
+      "type": "object",
+      "properties": {
+        "target_mount": {
+          "type": "string"
+        },
+        "host_mount_path": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_mount"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.SourceDetails": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "usage": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Driver": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "wrpolicy": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.FileSystem": {
+      "type": "object",
+      "properties": {
+        "fstype": {
+          "type": "string"
+        },
+        "permission": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/definitions/descriptorschema_2_16.SourceDetails"
+        },
+        "target": {
+          "type": "string"
+        },
+        "accessmode": {
+          "type": "string"
+        },
+        "driver": {
+          "$ref": "#/definitions/descriptorschema_2_16.Driver"
+        }
+      },
+      "required": [
+        "fstype"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.CopyFromHost": {
+      "type": "object",
+      "properties": {
+        "parent-dirname": {
+          "type": "string"
+        },
+        "nested-dirname": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "parent-dirname"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.RamFS": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "size"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.ResourcesRecommendations": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile",
+        "label",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Devices": {
+      "type": "object",
+      "properties": {
+        "device-id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "usage": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "function": {
+          "type": "string"
+        },
+        "mandatory": {
+          "type": "boolean"
+        },
+        "vendorID": {
+          "type": "string"
+        },
+        "productID": {
+          "type": "string"
+        },
+        "mount-point": {
+          "type": "string"
+        },
+        "device-directory-to-mount": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "label"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Ports": {
+      "type": "object",
+      "properties": {
+        "port": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "port"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Network": {
+      "type": "object",
+      "properties": {
+        "interface-name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "hint": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "external",
+            "east-west",
+            "eobc"
+          ]
+        },
+        "ports": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "tcp": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "$ref": "#/definitions/descriptorschema_2_16.Ports"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "udp": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "$ref": "#/definitions/descriptorschema_2_16.Ports"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "ipv6_required": {
+          "type": "boolean"
+        },
+        "voice-vlan": {
+          "type": "boolean"
+        },
+        "mac_forward_enable_mask": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "mac_forward_disable_mask": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "mirroring": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "interface-name"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Custom_map": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "memory": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "cpu": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "disk": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "memory",
+        "cpu"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Graphics": {
+      "type": "object",
+      "properties": {
+        "vnc": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.CharDev": {
+      "type": "object",
+      "properties": {
+        "dev": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "dev",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.CpuTopologyParams": {
+      "type": "object",
+      "properties": {
+        "sockets-per-core": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "cores": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        }
+      },
+      "required": [
+        "sockets-per-core",
+        "cores"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.ServiceSecurity": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "OauthClient",
+              "OauthValidator"
+            ]
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "oauth2"
+          ]
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Resources": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "type": "string"
+        },
+        "cpu": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "cpu-percent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "disk": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "extended-resources": {
+          "type": "boolean"
+        },
+        "persistent_data_target": {
+          "type": "string"
+        },
+        "host_mounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/descriptorschema_2_16.HostMounts"
+          }
+        },
+        "filesystem": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/descriptorschema_2_16.FileSystem"
+          }
+        },
+        "copy-from-host": {
+          "$ref": "#/definitions/descriptorschema_2_16.CopyFromHost"
+        },
+        "ramfs": {
+          "$ref": "#/definitions/descriptorschema_2_16.RamFS"
+        },
+        "rootfs_size": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "rootfs_expanded_size": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "memory": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "recommendations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/descriptorschema_2_16.ResourcesRecommendations"
+          }
+        },
+        "devices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/descriptorschema_2_16.Devices"
+          }
+        },
+        "device-info": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "udi"
+            ]
+          }
+        },
+        "platform-env": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "oauth": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "OauthClient",
+              "OauthValidator"
+            ]
+          }
+        },
+        "broker": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "BrokerClient",
+              "Broker"
+            ]
+          }
+        },
+        "network": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/descriptorschema_2_16.Network"
+          }
+        },
+        "custom-map": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/descriptorschema_2_16.Custom_map"
+          }
+        },
+        "graphics": {
+          "$ref": "#/definitions/descriptorschema_2_16.Graphics"
+        },
+        "vcpu": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "chardev": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/descriptorschema_2_16.CharDev"
+          }
+        },
+        "cpu-topology": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/descriptorschema_2_16.CpuTopologyParams"
+            }
+          ]
+        },
+        "visualization": {
+          "type": "boolean"
+        },
+        "datastore": {
+          "type": "boolean"
+        },
+        "privileged": {
+          "type": "boolean"
+        },
+        "randomdev": {
+          "type": "boolean"
+        },
+        "seed-controller-certificate": {
+          "type": "boolean"
+        },
+        "access-control": {
+          "$ref": "#/definitions/descriptorschema_2_16.ServiceSecurity"
+        },
+        "container-size": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "canbus": {
+          "type": "boolean"
+        },
+        "hugepages": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Rescue": {
+      "type": "object",
+      "properties": {
+        "remove_on_rescue": {
+          "type": "string"
+        },
+        "active_app_callback_on_reset": {
+          "type": "string"
+        },
+        "callback_timeout": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "remove_on_rescue",
+        "active_app_callback_on_reset",
+        "callback_timeout"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Monitor": {
+      "type": "object",
+      "properties": {
+        "script": {
+          "type": "string"
+        },
+        "initial_delay_seconds": {
+          "type": "number"
+        },
+        "period_seconds": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "script"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.PostUpgrade": {
+      "type": "object",
+      "properties": {
+        "post_script": {
+          "type": "string"
+        },
+        "initial_wait_time": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "post_script"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Session": {
+      "type": "object",
+      "properties": {
+        "disable_session": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.CartridgeDependsOn": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.ServiceDependsOn": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "min-api-version": {
+          "type": "number"
+        },
+        "max-api-version": {
+          "type": "number"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.PackageDependsOn": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/descriptorschema_2_16.ServiceDependsOn"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.AppSignature": {
+      "type": "object",
+      "properties": {
+        "verify-sign": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.StartupGenericLinux": {
+      "type": "object",
+      "properties": {
+        "runtime": {
+          "type": "string",
+          "enum": [
+            "generic-linux"
+          ]
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[a-zA-Z]([^/]+(/)?)+$"
+        }
+      },
+      "required": [
+        "runtime",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.RuntimeOptions": {
+      "type": "object",
+      "properties": {
+        "classpath": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "classpath"
+      ],
+      "additionalProperties": true
+    },
+    "descriptorschema_2_16.StartupNotGenericLinux": {
+      "type": "object",
+      "properties": {
+        "runtime": {
+          "not": {
+            "type": "string",
+            "enum": [
+              "generic-linux"
+            ]
+          }
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[a-zA-Z]([^/]+(/)?)+$"
+        },
+        "runtime-options": {
+          "$ref": "#/definitions/descriptorschema_2_16.RuntimeOptions"
+        },
+        "runtime-version": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "required": [
+        "target",
+        "runtime-version"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Child": {
+      "type": "object",
+      "properties": {
+        "manage-child": {
+          "type": "boolean"
+        },
+        "reserve-disk": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Stop": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string",
+          "pattern": "^[a-zA-Z]([^/]+(/)?)+$"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.AppPaas": {
+      "type": "object",
+      "properties": {
+        "cpuarch": {
+          "type": "string"
+        },
+        "resources": {
+          "$ref": "#/definitions/descriptorschema_2_16.Resources"
+        },
+        "rescue": {
+          "$ref": "#/definitions/descriptorschema_2_16.Rescue"
+        },
+        "monitor": {
+          "$ref": "#/definitions/descriptorschema_2_16.Monitor"
+        },
+        "post_upgrade": {
+          "$ref": "#/definitions/descriptorschema_2_16.PostUpgrade"
+        },
+        "system-capabilities": {
+          "type": "object",
+          "properties": {}
+        },
+        "session": {
+          "$ref": "#/definitions/descriptorschema_2_16.Session"
+        },
+        "depends-on": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "cartridges": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/descriptorschema_2_16.CartridgeDependsOn"
+                  }
+                }
+              },
+              "required": [
+                "cartridges"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "packages": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/descriptorschema_2_16.PackageDependsOn"
+                  }
+                }
+              },
+              "required": [
+                "packages"
+              ]
+            }
+          ]
+        },
+        "env": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "paas"
+          ]
+        },
+        "signature": {
+          "$ref": "#/definitions/descriptorschema_2_16.AppSignature"
+        },
+        "startup": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/descriptorschema_2_16.StartupGenericLinux"
+            },
+            {
+              "$ref": "#/definitions/descriptorschema_2_16.StartupNotGenericLinux"
+            }
+          ]
+        },
+        "child": {
+          "$ref": "#/definitions/descriptorschema_2_16.Child"
+        },
+        "stop": {
+          "$ref": "#/definitions/descriptorschema_2_16.Stop"
+        }
+      },
+      "required": [
+        "type",
+        "startup"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.StartupLXC": {
+      "type": "object",
+      "properties": {
+        "rootfs": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[/a-zA-Z]([^/]+(/)?)+$"
+        }
+      },
+      "required": [
+        "rootfs",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.AppLXC": {
+      "type": "object",
+      "properties": {
+        "cpuarch": {
+          "type": "string"
+        },
+        "resources": {
+          "$ref": "#/definitions/descriptorschema_2_16.Resources"
+        },
+        "rescue": {
+          "$ref": "#/definitions/descriptorschema_2_16.Rescue"
+        },
+        "monitor": {
+          "$ref": "#/definitions/descriptorschema_2_16.Monitor"
+        },
+        "post_upgrade": {
+          "$ref": "#/definitions/descriptorschema_2_16.PostUpgrade"
+        },
+        "system-capabilities": {
+          "type": "object",
+          "properties": {}
+        },
+        "session": {
+          "$ref": "#/definitions/descriptorschema_2_16.Session"
+        },
+        "depends-on": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "packages": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/descriptorschema_2_16.PackageDependsOn"
+                  }
+                }
+              },
+              "required": [
+                "packages"
+              ]
+            }
+          ]
+        },
+        "env": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "cpu-core": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "lxc"
+          ]
+        },
+        "signature": {
+          "$ref": "#/definitions/descriptorschema_2_16.AppSignature"
+        },
+        "kernel-version": {
+          "type": "string"
+        },
+        "startup": {
+          "$ref": "#/definitions/descriptorschema_2_16.StartupLXC"
+        },
+        "child": {
+          "$ref": "#/definitions/descriptorschema_2_16.Child"
+        }
+      },
+      "required": [
+        "cpuarch",
+        "type",
+        "startup"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.StartupVM_2_1_CDROM": {
+      "type": "object",
+      "properties": {
+        "target-dev": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "target-dev",
+        "file"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.StartupVM_2_1_RFS": {
+      "type": "object",
+      "properties": {
+        "rootfs": {
+          "type": "string"
+        },
+        "kernel": {
+          "type": "string"
+        },
+        "ostype": {
+          "type": "string"
+        },
+        "qemu-guest-agent": {
+          "type": "boolean"
+        },
+        "cdrom": {
+          "$ref": "#/definitions/descriptorschema_2_16.StartupVM_2_1_CDROM"
+        }
+      },
+      "required": [
+        "rootfs",
+        "kernel"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.StartupVM_2_1_DISKS": {
+      "type": "object",
+      "properties": {
+        "ostype": {
+          "type": "string"
+        },
+        "qemu-guest-agent": {
+          "type": "boolean"
+        },
+        "cdrom": {
+          "$ref": "#/definitions/descriptorschema_2_16.StartupVM_2_1_CDROM"
+        },
+        "disks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target-dev": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "disks"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.AppVM": {
+      "type": "object",
+      "properties": {
+        "cpuarch": {
+          "type": "string"
+        },
+        "resources": {
+          "$ref": "#/definitions/descriptorschema_2_16.Resources"
+        },
+        "rescue": {
+          "$ref": "#/definitions/descriptorschema_2_16.Rescue"
+        },
+        "monitor": {
+          "$ref": "#/definitions/descriptorschema_2_16.Monitor"
+        },
+        "post_upgrade": {
+          "$ref": "#/definitions/descriptorschema_2_16.PostUpgrade"
+        },
+        "system-capabilities": {
+          "type": "object",
+          "properties": {}
+        },
+        "session": {
+          "$ref": "#/definitions/descriptorschema_2_16.Session"
+        },
+        "depends-on": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "packages": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/descriptorschema_2_16.PackageDependsOn"
+                  }
+                }
+              },
+              "required": [
+                "packages"
+              ]
+            }
+          ]
+        },
+        "env": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "cpu-core": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "vm"
+          ]
+        },
+        "signature": {
+          "$ref": "#/definitions/descriptorschema_2_16.AppSignature"
+        },
+        "startup": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/descriptorschema_2_16.StartupVM_2_1_RFS"
+            },
+            {
+              "$ref": "#/definitions/descriptorschema_2_16.StartupVM_2_1_DISKS"
+            }
+          ]
+        },
+        "child": {
+          "$ref": "#/definitions/descriptorschema_2_16.Child"
+        }
+      },
+      "required": [
+        "cpuarch",
+        "type",
+        "startup"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.StartupDocker_2": {
+      "type": "object",
+      "properties": {
+        "image-name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[/a-zA-Z]([^/]+(/)?)+$"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "image-name",
+        "tag",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.StartupDocker": {
+      "type": "object",
+      "properties": {
+        "rootfs": {
+          "type": "string"
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[/a-zA-Z]([^/]+(/)?)+$"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "user": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "group": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "workdir": {
+          "type": "string"
+        },
+        "runtime_options": {
+          "type": "string"
+        },
+        "restricted_disk_options": {
+          "type": "string"
+        },
+        "unrestricted_disk_options": {
+          "type": "string"
+        },
+        "args": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "os-mode": {
+          "type": "boolean"
+        },
+        "accessmode": {
+          "type": "string",
+          "enum": [
+            "readonly",
+            "readwrite"
+          ]
+        },
+        "users": {
+          "type": "string",
+          "enum": [
+            "single",
+            "multiple"
+          ]
+        }
+      },
+      "required": [
+        "rootfs",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.AppDocker_2_2": {
+      "type": "object",
+      "properties": {
+        "cpuarch": {
+          "type": "string"
+        },
+        "resources": {
+          "$ref": "#/definitions/descriptorschema_2_16.Resources"
+        },
+        "rescue": {
+          "$ref": "#/definitions/descriptorschema_2_16.Rescue"
+        },
+        "monitor": {
+          "$ref": "#/definitions/descriptorschema_2_16.Monitor"
+        },
+        "post_upgrade": {
+          "$ref": "#/definitions/descriptorschema_2_16.PostUpgrade"
+        },
+        "system-capabilities": {
+          "type": "object",
+          "properties": {}
+        },
+        "session": {
+          "$ref": "#/definitions/descriptorschema_2_16.Session"
+        },
+        "depends-on": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "packages": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/descriptorschema_2_16.PackageDependsOn"
+                  }
+                }
+              },
+              "required": [
+                "packages"
+              ]
+            }
+          ]
+        },
+        "env": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "cpu-core": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "docker"
+          ]
+        },
+        "signature": {
+          "$ref": "#/definitions/descriptorschema_2_16.AppSignature"
+        },
+        "startup": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/descriptorschema_2_16.StartupDocker_2"
+            },
+            {
+              "$ref": "#/definitions/descriptorschema_2_16.StartupDocker"
+            }
+          ]
+        },
+        "child": {
+          "$ref": "#/definitions/descriptorschema_2_16.Child"
+        }
+      },
+      "required": [
+        "cpuarch",
+        "type",
+        "startup"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.Service": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "api-version": {
+          "type": "number"
+        },
+        "version": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "port-mapping": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[\\w]+:(tcp|udp){1}:[0-9-]+$"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "api-version",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.ServiceSecuritySchemas": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "oauth2"
+          ]
+        },
+        "available-scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "default-scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "descriptorschema_2_16.ServiceBundle": {
+      "type": "object",
+      "properties": {
+        "provides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/descriptorschema_2_16.Service"
+          }
+        },
+        "security-schemas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/descriptorschema_2_16.ServiceSecuritySchemas"
+          }
+        }
+      },
+      "required": [
+        "provides"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "description": "Schema for IOx application descriptor - version 2.16",
+  "properties": {
+    "descriptor-schema-version": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "info": {
+      "$ref": "#/definitions/descriptorschema_2_16.AppInfo"
+    },
+    "app": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/descriptorschema_2_16.AppPaas"
+        },
+        {
+          "$ref": "#/definitions/descriptorschema_2_16.AppLXC"
+        },
+        {
+          "$ref": "#/definitions/descriptorschema_2_16.AppVM"
+        },
+        {
+          "$ref": "#/definitions/descriptorschema_2_16.AppDocker_2_2"
+        }
+      ]
+    },
+    "service-bundle": {
+      "$ref": "#/definitions/descriptorschema_2_16.ServiceBundle"
+    }
+  },
+  "required": [
+    "descriptor-schema-version",
+    "info",
+    "app"
+  ],
+  "additionalProperties": false
+}
